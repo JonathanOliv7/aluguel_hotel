@@ -9,9 +9,8 @@ import java.util.List;
 public class Rent {
 
 	private Date moment;
-	private int validity;
 	private Customer customer;
-	private static Calendar calendar = Calendar.getInstance();
+	
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 	List<ServiceRoom> services = new ArrayList<>();
@@ -19,10 +18,10 @@ public class Rent {
 	public Rent() {
 	}
 
-	public Rent(Customer customer, Date moment, int validity) {
+	public Rent(Customer customer, Date moment) {
 		this.moment = moment;
 		this.customer = customer;
-		this.validity = validity;
+	
 	}
 
 	public Customer getClient() {
@@ -61,29 +60,28 @@ public class Rent {
 		return total;
 	}
 
-	public String totalValidity() {
+	public String totalValidity(ServiceRoom room) {
 
-		calendar.setTime(getMoment());
-		;
-		for (ServiceRoom rooms : services) {
-
-			switch (rooms.getPeriod().name()) {
+		Calendar calendar = Calendar.getInstance();
+		
+			switch (room.getPeriod().name()) {
 
 			case "DAILY":
 				sdf.format(calendar.getTime());
-				calendar.add(Calendar.DAY_OF_MONTH, validity);
-
+				calendar.add(Calendar.DAY_OF_MONTH, room.getQuantityRent() );
 				break;
+				
 			case "WEEK":
 				sdf.format(calendar.getTime());
-				calendar.add(Calendar.WEEK_OF_MONTH, validity);
+				calendar.add(Calendar.WEEK_OF_MONTH, room.getQuantityRent());
 				break;
+				
 			case "MONTHLY":
 				sdf.format(calendar.getTime());
-				calendar.add(Calendar.MONTH, validity);
+				calendar.add(Calendar.MONTH, room.getQuantityRent());
 				break;
 			}
-		}
+		
 		return sdf.format(calendar.getTime());
 	}
 
@@ -93,7 +91,7 @@ public class Rent {
 		sb.append("Quantidade de quartos alugados: "+ services.size()  +"\n\n");
 		for (ServiceRoom rooms : services) {
 			sb.append(rooms.toString() + "\n");
-			sb.append("Válido até: " + totalValidity() + "\n\n");
+			sb.append("Válido até: " + totalValidity(rooms) + "\n\n");
 
 		}
 		sb.append("Valor total: " + totalPrice());

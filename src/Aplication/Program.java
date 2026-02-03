@@ -32,7 +32,7 @@ public class Program {
 		System.out.println();
 		System.out.print("Quantos quartos:");
 		Integer quantityRooms = sc.nextInt();
-		Rent rent = new Rent(customer, new Date(), quantityRooms);
+		Rent rent = new Rent(customer, new Date());
 
 		for (int i = 0; i < quantityRooms; i++) {
 			System.out.print("Digite o número do quarto: ");
@@ -40,7 +40,7 @@ public class Program {
 			sc.nextLine();
 			Room rooms = new Room(number);
 
-			System.out.print("Qual plano será(DAILY,WEEK, MOTHLY)");
+			System.out.print("Qual plano será(DAILY,WEEK, MONTHLY)");
 			RentalPeriod period = RentalPeriod.valueOf(sc.nextLine().toUpperCase());
 			System.out.print("Tempo: ");
 			Integer quantityRent = sc.nextInt();
